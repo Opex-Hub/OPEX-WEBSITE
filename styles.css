@@ -1,109 +1,81 @@
+:root {
+  --color-primary: #8b5cf6;
+  --color-primary-contrast: #ffffff;
+  --color-bg: #0b0912;
+  --color-surface: #15111f;
+  --color-surface-soft: #1d172b;
+  --color-text: #f8f7fb;
+  --color-muted: #a8a0b8;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-accent: #d8b4fe;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --radius: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  padding: 0;
-  background-color: #1e5799;
-  font-family: Arial, sans-serif;
-  color: white;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
 }
 
 .container {
-  max-width: 800px;
+  width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 20px;
-  text-align: center;
 }
 
-.title {
-  color: #ffffff;
-  font-size: 2.5em;
-  margin-bottom: 30px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+.grid-glow {
+  background-image: linear-gradient(rgba(216, 180, 254, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(216, 180, 254, .045) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
-.photo-container {
-  margin: 30px 0;
+.text-gradient {
+  background: linear-gradient(110deg, #ffffff 18%, var(--color-accent) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.profile-pic {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  border: 5px solid white;
-  object-fit: cover;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+.glass {
+  background: linear-gradient(145deg, rgba(29, 23, 43, .9), rgba(15, 12, 23, .82));
+  border: 1px solid var(--color-border);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .28);
+  backdrop-filter: blur(18px);
 }
 
-.script-section, .discord-section, .features {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  border-radius: 10px;
-  margin: 20px 0;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+.pill {
+  border: 1px solid rgba(139, 92, 246, .35);
+  background: rgba(139, 92, 246, .11);
+  color: var(--color-accent);
 }
 
-.code-box {
-  background-color: #000;
-  color: #00ff00;
-  padding: 15px;
-  border-radius: 5px;
-  font-family: monospace;
-  font-size: 16px;
-  position: relative;
-  margin: 15px 0;
-  text-align: left;
-  overflow-x: auto;
+.code-line {
+  color: #e8dcff;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
-.copy-btn {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-.copy-btn:hover {
-  background-color: #45a049;
-}
-
-.discord-link {
-  display: inline-block;
-  background-color: #7289DA;
-  color: white;
-  padding: 12px 25px;
-  text-decoration: none;
-  border-radius: 30px;
-  font-weight: bold;
-  margin-top: 15px;
-  transition: transform 0.2s;
-}
-
-.discord-link:hover {
-  transform: scale(1.05);
-  background-color: #677bc4;
-}
-
-.features ul {
-  list-style-type: none;
-  padding: 0;
-  text-align: left;
-  max-width: 400px;
-  margin: 20px auto;
-}
-
-.features li {
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.15);
-  margin: 10px 0;
-  border-radius: 5px;
-}
-
-.features li:before {
-  content: "✓";
-  color: #4CAF50;
-  margin-right: 10px;
-  font-weight: bold;
+@media (max-width: 720px) {
+  .container {
+    width: min(100% - 32px, 560px);
+  }
 }
