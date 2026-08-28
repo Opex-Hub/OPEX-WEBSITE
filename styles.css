@@ -1,0 +1,109 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1e5799;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  color: #ffffff;
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.photo-container {
+  margin: 30px 0;
+}
+
+.profile-pic {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 5px solid white;
+  object-fit: cover;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.script-section, .discord-section, .features {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.code-box {
+  background-color: #000;
+  color: #00ff00;
+  padding: 15px;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 16px;
+  position: relative;
+  margin: 15px 0;
+  text-align: left;
+  overflow-x: auto;
+}
+
+.copy-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.copy-btn:hover {
+  background-color: #45a049;
+}
+
+.discord-link {
+  display: inline-block;
+  background-color: #7289DA;
+  color: white;
+  padding: 12px 25px;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  margin-top: 15px;
+  transition: transform 0.2s;
+}
+
+.discord-link:hover {
+  transform: scale(1.05);
+  background-color: #677bc4;
+}
+
+.features ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: left;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.features li {
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.15);
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.features li:before {
+  content: "✓";
+  color: #4CAF50;
+  margin-right: 10px;
+  font-weight: bold;
+}
