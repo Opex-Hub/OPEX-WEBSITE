@@ -1,46 +1,146 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Opex Hub</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="title">Welcome to Opex Hub</h1>
-      
-      <!-- Your Photo -->
-      <div class="photo-container">
-        <img src="your-photo.jpg" alt="Opex" class="profile-pic">
-      </div>
-      
-      <!-- Roblox Script Box -->
-      <div class="script-section">
-        <h2>Roblox Script</h2>
-        <div class="code-box">
-          <code id="scriptText">loadstring(game:HttpGet("https://raw.githubusercontent.com/Opex-Hub/Opex-Hub/refs/heads/main/Opex%20Hub"))()</code>
-          <button onclick="copyScript()" class="copy-btn">Copy Script</button>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opex — one place to get started</title>
+  <link rel="stylesheet" href="/theme.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="absolute inset-x-0 top-0 z-20">
+    <div class="container flex h-24 items-center justify-between">
+      <a href="/" class="flex items-center gap-3" aria-label="Opex home">
+        <span class="grid h-10 w-10 place-items-center rounded-[var(--radius)] bg-[var(--color-primary)] font-[var(--font-heading)] text-lg font-bold text-[var(--color-primary-contrast)] shadow-[0_0_36px_rgba(139,92,246,.4)]">O</span>
+        <span class="font-[var(--font-heading)] text-xl font-semibold tracking-[-.04em]">Opex<span class="text-[var(--color-primary)]">.</span></span>
+      </a>
+      <nav class="hidden items-center gap-9 text-sm text-[var(--color-muted)] md:flex">
+        <a href="#script" class="transition hover:text-[var(--color-text)]">Get started</a>
+        <a href="#why" class="transition hover:text-[var(--color-text)]">Why Opex</a>
+        <a href="#games" class="transition hover:text-[var(--color-text)]">Supported games</a>
+        <a href="/community" class="transition hover:text-[var(--color-text)]">Community</a>
+      </nav>
+      <a href="https://discord.gg/QPuRGAwBN" class="rounded-full border border-[rgba(139,92,246,.45)] px-5 py-2.5 text-sm font-semibold text-[var(--color-accent)] transition hover:bg-[rgba(139,92,246,.14)]">Join Discord <span class="ml-1">↗</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="grid-glow relative overflow-hidden border-b border-[var(--color-border)] pt-40 pb-24 md:pt-48 md:pb-36">
+      <div class="absolute left-1/2 top-20 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[rgba(139,92,246,.16)] blur-[130px]"></div>
+      <div class="container relative grid items-center gap-16 lg:grid-cols-[1.02fr_.98fr]">
+        <div>
+          <div class="pill mb-7 inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-xs font-semibold tracking-[.12em]"><span class="h-2 w-2 rounded-full bg-[var(--color-primary)] shadow-[0_0_12px_var(--color-primary)]"></span> OPEX HUB · LIVE NOW</div>
+          <h1 class="max-w-3xl font-[var(--font-heading)] text-5xl font-semibold leading-[1.02] tracking-[-.06em] md:text-7xl">Your next move starts <span class="text-gradient">here.</span></h1>
+          <p class="mt-7 max-w-xl text-lg leading-8 text-[var(--color-muted)]">A focused hub for the script, the latest updates, and a community that keeps you in the loop.</p>
+          <div class="mt-9 flex flex-wrap gap-3">
+            <a href="#script" class="rounded-full bg-[var(--color-primary)] px-6 py-3.5 text-sm font-semibold text-[var(--color-primary-contrast)] shadow-[0_12px_34px_rgba(139,92,246,.3)] transition hover:-translate-y-0.5">Get the script <span class="ml-2">↓</span></a>
+            <a href="https://discord.gg/QPuRGAwBN" class="rounded-full border border-[var(--color-border)] bg-[rgba(21,17,31,.65)] px-6 py-3.5 text-sm font-semibold transition hover:border-[rgba(139,92,246,.55)] hover:bg-[var(--color-surface-soft)]">Enter the server <span class="ml-2 text-[var(--color-accent)]">↗</span></a>
+          </div>
+          <div class="mt-12 flex flex-wrap gap-x-8 gap-y-3 text-sm text-[var(--color-muted)]"><span><strong class="mr-1 text-[var(--color-text)]">01</strong> Copy-ready</span><span><strong class="mr-1 text-[var(--color-text)]">02</strong> Community-led</span><span><strong class="mr-1 text-[var(--color-text)]">03</strong> Always updated</span></div>
+        </div>
+        <div id="script" class="glass relative rounded-[var(--radius)] p-2">
+          <div class="rounded-[20px] bg-[var(--color-bg)] p-6 md:p-8">
+            <div class="mb-10 flex items-center justify-between">
+              <div class="flex gap-2"><span class="h-2.5 w-2.5 rounded-full bg-[#ff7777]"></span><span class="h-2.5 w-2.5 rounded-full bg-[#ffd166]"></span><span class="h-2.5 w-2.5 rounded-full bg-[#6ee7a0]"></span></div><span class="rounded-full bg-[var(--color-surface-soft)] px-3 py-1 text-xs text-[var(--color-muted)]">Opex Hub</span>
+            </div>
+            <div class="mb-4 text-xs font-bold uppercase tracking-[.2em] text-[var(--color-accent)]">Loadstring</div>
+            <code class="code-line block rounded-[var(--radius)] border border-[var(--color-border)] bg-[rgba(0,0,0,.28)] p-5 text-[13px] leading-7">loadstring(game:HttpGet("https://raw.githubusercontent.com/Opex-Hub/Opex-Hub/refs/heads/main/Opex%20Hub"))()</code>
+            <div class="mt-5 flex items-center justify-between gap-4"><span class="text-xs text-[var(--color-muted)]">Ready when you are.</span><a href="#how" class="text-xs font-semibold text-[var(--color-accent)] hover:text-[var(--color-text)]">How it works →</a></div>
+          </div>
         </div>
       </div>
-      
-      <!-- Discord Section -->
-      <div class="discord-section">
-        <h2>Join Our Discord</h2>
-        <p>Connect with our community and get updates!</p>
-        <a href="https://discord.gg/AKSHdZVAM" target="_blank" class="discord-link">Join Discord Server</a>
+    </section>
+
+    <section id="why" class="container py-24 md:py-32">
+      <div class="mb-14 max-w-2xl">
+        <p class="mb-4 text-xs font-bold uppercase tracking-[.2em] text-[var(--color-accent)]">The Opex difference</p>
+        <h2 class="font-[var(--font-heading)] text-3xl font-semibold tracking-[-.04em] md:text-5xl">Everything useful.<br><span class="text-gradient">Nothing in the way.</span></h2>
+        <p class="mt-5 leading-7 text-[var(--color-muted)]">Opex keeps the essentials close, clear, and easy to find so you can spend less time searching.</p>
       </div>
-      
-      <!-- Features Section -->
-      <div class="features">
-        <h2>Opex Hub Features</h2>
-        <ul>
-          <li>Latest Scripts & Updates</li>
-          <li>Active Community Support</li>
-          <li>Exclusive Content</li>
-          <li>Regular Updates</li>
-        </ul>
+      <div class="grid gap-5 md:grid-cols-3">
+        <article class="glass rounded-[var(--radius)] p-7 transition hover:-translate-y-1">
+          <div class="mb-14 grid h-11 w-11 place-items-center rounded-2xl bg-[rgba(139,92,246,.15)] text-xl text-[var(--color-accent)]">⌁</div>
+          <h3 class="font-[var(--font-heading)] text-lg font-semibold">Ready to load</h3>
+          <p class="mt-3 text-sm leading-6 text-[var(--color-muted)]">A direct, copy-ready loadstring means less time searching and more time getting started.</p>
+        </article>
+        <article class="glass rounded-[var(--radius)] p-7 transition hover:-translate-y-1">
+          <div class="mb-14 grid h-11 w-11 place-items-center rounded-2xl bg-[rgba(139,92,246,.15)] text-xl text-[var(--color-accent)]">✦</div>
+          <h3 class="font-[var(--font-heading)] text-lg font-semibold">Stay current</h3>
+          <p class="mt-3 text-sm leading-6 text-[var(--color-muted)]">Find announcements, updates, and helpful context from the people building around Opex.</p>
+        </article>
+        <article class="glass rounded-[var(--radius)] p-7 transition hover:-translate-y-1">
+          <div class="mb-14 grid h-11 w-11 place-items-center rounded-2xl bg-[rgba(139,92,246,.15)] text-xl text-[var(--color-accent)]">◌</div>
+          <h3 class="font-[var(--font-heading)] text-lg font-semibold">Find your people</h3>
+          <p class="mt-3 text-sm leading-6 text-[var(--color-muted)]">Join a growing server where members can share ideas, ask questions, and squad up.</p>
+        </article>
       </div>
-    </div>
-    
-    <script src="script.js"></script>
-  </body>
+    </section>
+
+    <section id="games" class="border-y border-[var(--color-border)] bg-[var(--color-surface)] py-24 md:py-32">
+      <div class="container">
+        <div class="mb-12 max-w-2xl">
+          <p class="mb-4 text-xs font-bold uppercase tracking-[.2em] text-[var(--color-accent)]">Supported games</p>
+          <h2 class="font-[var(--font-heading)] text-3xl font-semibold tracking-[-.04em] md:text-5xl">Built for the games<br><span class="text-gradient">you play most.</span></h2>
+          <p class="mt-5 leading-7 text-[var(--color-muted)]">Opex currently supports a growing list of Roblox experiences. Join the Opex server for compatibility updates, announcements, and help.</p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="glass rounded-[var(--radius)] p-6 transition hover:-translate-y-1">
+            <span class="text-sm font-bold text-[var(--color-accent)]">01</span>
+            <h3 class="mt-12 font-[var(--font-heading)] text-lg font-semibold">MM2</h3>
+            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Murder Mystery 2</p>
+          </article>
+          <article class="glass rounded-[var(--radius)] p-6 transition hover:-translate-y-1">
+            <span class="text-sm font-bold text-[var(--color-accent)]">02</span>
+            <h3 class="mt-12 font-[var(--font-heading)] text-lg font-semibold">Grow a Garden</h3>
+            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Grow, collect, and build.</p>
+          </article>
+          <article class="glass rounded-[var(--radius)] p-6 transition hover:-translate-y-1">
+            <span class="text-sm font-bold text-[var(--color-accent)]">03</span>
+            <h3 class="mt-12 font-[var(--font-heading)] text-lg font-semibold">Climb and Jump Tower</h3>
+            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Take on the tower challenge.</p>
+          </article>
+          <article class="glass rounded-[var(--radius)] p-6 transition hover:-translate-y-1">
+            <span class="text-sm font-bold text-[var(--color-accent)]">04</span>
+            <h3 class="mt-12 font-[var(--font-heading)] text-lg font-semibold">+1 Wings for Brainrot</h3>
+            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Keep progressing and flying higher.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="border-y border-[var(--color-border)] bg-[var(--color-surface)] py-24">
+      <div class="container grid items-center gap-12 md:grid-cols-[.75fr_1.25fr]">
+        <div>
+          <p class="mb-4 text-xs font-bold uppercase tracking-[.2em] text-[var(--color-accent)]">Start in three steps</p>
+          <h2 class="font-[var(--font-heading)] text-3xl font-semibold tracking-[-.04em] md:text-4xl">The Opex server<br>keeps you moving.</h2>
+          <p class="mt-5 max-w-sm leading-7 text-[var(--color-muted)]">Join the Opex server for updates, support, game news, and a community built around the latest experiences.</p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="rounded-[var(--radius)] border border-[var(--color-border)] p-5"><span class="text-sm text-[var(--color-accent)]">01</span>
+            <h3 class="mt-8 font-semibold">Copy</h3>
+            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Grab the loadstring above.</p>
+          </div>
+          <div class="rounded-[var(--radius)] border border-[var(--color-border)] p-5"><span class="text-sm text-[var(--color-accent)]">02</span>
+            <h3 class="mt-8 font-semibold">Load</h3>
+            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Use it in one of the supported games.</p>
+          </div>
+          <div class="rounded-[var(--radius)] border border-[var(--color-border)] p-5"><span class="text-sm text-[var(--color-accent)]">03</span>
+            <h3 class="mt-8 font-semibold">Connect</h3>
+            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Join the Opex server for updates and help.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="container flex flex-col gap-5 py-10 text-sm text-[var(--color-muted)] sm:flex-row sm:items-center sm:justify-between">
+    <div class="flex items-center gap-3"><span class="grid h-8 w-8 place-items-center rounded-xl bg-[var(--color-primary)] text-sm font-bold text-[var(--color-primary-contrast)]">O</span><span>© 2025 Opex Hub</span></div>
+    <div class="flex gap-6"><a href="/community" class="hover:text-[var(--color-text)]">Community</a><a href="https://discord.gg/QPuRGAwBN" class="hover:text-[var(--color-text)]">Discord ↗</a></div>
+  </footer>
+</body>
+
 </html>
