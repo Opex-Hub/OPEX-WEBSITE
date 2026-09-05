@@ -1,146 +1,285 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Opex — one place to get started</title>
-  <link rel="stylesheet" href="/theme.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opex Hub</title>
+    <style>
+        /* Base Reset & Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #050b14;
+            background: radial-gradient(circle at bottom right, #0a1930, #000000);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            overflow: hidden; /* Keeps the stars inside the window */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Shooting Stars Animation */
+        .stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            transform: rotateZ(45deg);
+        }
+
+        .star {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 2px;
+            background: linear-gradient(-45deg, #5f91ff, rgba(0, 0, 255, 0));
+            border-radius: 999px;
+            filter: drop-shadow(0 0 6px #699bff);
+            animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
+        }
+
+        .star::before {
+            content: '';
+            position: absolute;
+            top: calc(50% - 1px);
+            right: 0;
+            height: 2px;
+            background: linear-gradient(-45deg, rgba(0,0,255,0), #5f91ff, rgba(0,0,255,0));
+            transform: translateX(50%) rotateZ(45deg);
+            border-radius: 100%;
+            animation: shining 3s ease-in-out infinite;
+        }
+
+        .star::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - 1px);
+            right: 0;
+            height: 2px;
+            background: linear-gradient(-45deg, rgba(0,0,255,0), #5f91ff, rgba(0,0,255,0));
+            transform: translateX(50%) rotateZ(-45deg);
+            border-radius: 100%;
+            animation: shining 3s ease-in-out infinite;
+        }
+
+        /* Individual Star Positions and Delays */
+        .star:nth-child(1) { top: calc(50% - -100px); left: calc(50% - 300px); animation-delay: 0s; }
+        .star:nth-child(2) { top: calc(50% - 150px); left: calc(50% - 100px); animation-delay: 1.2s; }
+        .star:nth-child(3) { top: calc(50% - -250px); left: calc(50% - 200px); animation-delay: 2.5s; }
+        .star:nth-child(4) { top: calc(50% - 50px); left: calc(50% - 400px); animation-delay: 0.8s; }
+        .star:nth-child(5) { top: calc(50% - 300px); left: calc(50% - 150px); animation-delay: 3.1s; }
+
+        @keyframes tail {
+            0% { width: 0; }
+            30% { width: 100px; }
+            100% { width: 0; }
+        }
+
+        @keyframes shooting {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(800px); }
+        }
+
+        @keyframes shining {
+            0% { width: 0; }
+            50% { width: 30px; }
+            100% { width: 0; }
+        }
+
+        /* Glassmorphism Main UI */
+        .container {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 550px;
+            text-align: center;
+            z-index: 1;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            background: -webkit-linear-gradient(#5f91ff, #a5c2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(95, 145, 255, 0.3);
+        }
+
+        p {
+            color: #b0bec5;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        /* Loadstring Box */
+        .code-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #5f91ff;
+            word-break: break-all;
+            margin-bottom: 15px;
+            border: 1px solid rgba(95, 145, 255, 0.2);
+        }
+
+        .btn {
+            background: #5f91ff;
+            color: #050b14;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #7ca5ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(95, 145, 255, 0.4);
+        }
+
+        /* Discord Section */
+        .discord-section {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .discord-section p {
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .discord-btn {
+            background: #5865F2; /* Standard Discord Blurple */
+            color: white;
+        }
+
+        .discord-btn:hover {
+            background: #4752C4;
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+        }
+
+        /* Supported Games List */
+        .games-section {
+            margin-top: 35px;
+            text-align: left;
+        }
+
+        .games-section h3 {
+            color: #5f91ff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .games-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .games-list li {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #5f91ff;
+            font-size: 0.95rem;
+            transition: background 0.3s;
+        }
+
+        .games-list li:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .games-list .coming-soon {
+            border-left: 4px solid #4caf50;
+            color: #4caf50;
+            font-style: italic;
+            text-align: center;
+            background: transparent;
+        }
+        
+        .games-list .coming-soon:hover {
+            background: transparent;
+        }
+
+    </style>
 </head>
-
 <body>
-  <header class="absolute inset-x-0 top-0 z-20">
-    <div class="container flex h-24 items-center justify-between">
-      <a href="/" class="flex items-center gap-3" aria-label="Opex home">
-        <span class="grid h-10 w-10 place-items-center rounded-[var(--radius)] bg-[var(--color-primary)] font-[var(--font-heading)] text-lg font-bold text-[var(--color-primary-contrast)] shadow-[0_0_36px_rgba(139,92,246,.4)]">O</span>
-        <span class="font-[var(--font-heading)] text-xl font-semibold tracking-[-.04em]">Opex<span class="text-[var(--color-primary)]">.</span></span>
-      </a>
-      <nav class="hidden items-center gap-9 text-sm text-[var(--color-muted)] md:flex">
-        <a href="#script" class="transition hover:text-[var(--color-text)]">Get started</a>
-        <a href="#why" class="transition hover:text-[var(--color-text)]">Why Opex</a>
-        <a href="#games" class="transition hover:text-[var(--color-text)]">Supported games</a>
-        <a href="/community" class="transition hover:text-[var(--color-text)]">Community</a>
-      </nav>
-      <a href="https://discord.gg/QPuRGAwBN" class="rounded-full border border-[rgba(139,92,246,.45)] px-5 py-2.5 text-sm font-semibold text-[var(--color-accent)] transition hover:bg-[rgba(139,92,246,.14)]">Join Discord <span class="ml-1">↗</span></a>
+
+    <div class="stars-container">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
     </div>
-  </header>
 
-  <main>
-    <section class="grid-glow relative overflow-hidden border-b border-[var(--color-border)] pt-40 pb-24 md:pt-48 md:pb-36">
-      <div class="absolute left-1/2 top-20 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[rgba(139,92,246,.16)] blur-[130px]"></div>
-      <div class="container relative grid items-center gap-16 lg:grid-cols-[1.02fr_.98fr]">
-        <div>
-          <div class="pill mb-7 inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-xs font-semibold tracking-[.12em]"><span class="h-2 w-2 rounded-full bg-[var(--color-primary)] shadow-[0_0_12px_var(--color-primary)]"></span> OPEX HUB · LIVE NOW</div>
-          <h1 class="max-w-3xl font-[var(--font-heading)] text-5xl font-semibold leading-[1.02] tracking-[-.06em] md:text-7xl">Your next move starts <span class="text-gradient">here.</span></h1>
-          <p class="mt-7 max-w-xl text-lg leading-8 text-[var(--color-muted)]">A focused hub for the script, the latest updates, and a community that keeps you in the loop.</p>
-          <div class="mt-9 flex flex-wrap gap-3">
-            <a href="#script" class="rounded-full bg-[var(--color-primary)] px-6 py-3.5 text-sm font-semibold text-[var(--color-primary-contrast)] shadow-[0_12px_34px_rgba(139,92,246,.3)] transition hover:-translate-y-0.5">Get the script <span class="ml-2">↓</span></a>
-            <a href="https://discord.gg/QPuRGAwBN" class="rounded-full border border-[var(--color-border)] bg-[rgba(21,17,31,.65)] px-6 py-3.5 text-sm font-semibold transition hover:border-[rgba(139,92,246,.55)] hover:bg-[var(--color-surface-soft)]">Enter the server <span class="ml-2 text-[var(--color-accent)]">↗</span></a>
-          </div>
-          <div class="mt-12 flex flex-wrap gap-x-8 gap-y-3 text-sm text-[var(--color-muted)]"><span><strong class="mr-1 text-[var(--color-text)]">01</strong> Copy-ready</span><span><strong class="mr-1 text-[var(--color-text)]">02</strong> Community-led</span><span><strong class="mr-1 text-[var(--color-text)]">03</strong> Always updated</span></div>
-        </div>
-        <div id="script" class="glass relative rounded-[var(--radius)] p-2">
-          <div class="rounded-[20px] bg-[var(--color-bg)] p-6 md:p-8">
-            <div class="mb-10 flex items-center justify-between">
-              <div class="flex gap-2"><span class="h-2.5 w-2.5 rounded-full bg-[#ff7777]"></span><span class="h-2.5 w-2.5 rounded-full bg-[#ffd166]"></span><span class="h-2.5 w-2.5 rounded-full bg-[#6ee7a0]"></span></div><span class="rounded-full bg-[var(--color-surface-soft)] px-3 py-1 text-xs text-[var(--color-muted)]">Opex Hub</span>
-            </div>
-            <div class="mb-4 text-xs font-bold uppercase tracking-[.2em] text-[var(--color-accent)]">Loadstring</div>
-            <code class="code-line block rounded-[var(--radius)] border border-[var(--color-border)] bg-[rgba(0,0,0,.28)] p-5 text-[13px] leading-7">loadstring(game:HttpGet("https://raw.githubusercontent.com/Opex-Hub/Opex-Hub/refs/heads/main/Opex%20Hub"))()</code>
-            <div class="mt-5 flex items-center justify-between gap-4"><span class="text-xs text-[var(--color-muted)]">Ready when you are.</span><a href="#how" class="text-xs font-semibold text-[var(--color-accent)] hover:text-[var(--color-text)]">How it works →</a></div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="container">
+        <h1>Opex Hub</h1>
+        <p>Premium Script Execution Hub</p>
 
-    <section id="why" class="container py-24 md:py-32">
-      <div class="mb-14 max-w-2xl">
-        <p class="mb-4 text-xs font-bold uppercase tracking-[.2em] text-[var(--color-accent)]">The Opex difference</p>
-        <h2 class="font-[var(--font-heading)] text-3xl font-semibold tracking-[-.04em] md:text-5xl">Everything useful.<br><span class="text-gradient">Nothing in the way.</span></h2>
-        <p class="mt-5 leading-7 text-[var(--color-muted)]">Opex keeps the essentials close, clear, and easy to find so you can spend less time searching.</p>
-      </div>
-      <div class="grid gap-5 md:grid-cols-3">
-        <article class="glass rounded-[var(--radius)] p-7 transition hover:-translate-y-1">
-          <div class="mb-14 grid h-11 w-11 place-items-center rounded-2xl bg-[rgba(139,92,246,.15)] text-xl text-[var(--color-accent)]">⌁</div>
-          <h3 class="font-[var(--font-heading)] text-lg font-semibold">Ready to load</h3>
-          <p class="mt-3 text-sm leading-6 text-[var(--color-muted)]">A direct, copy-ready loadstring means less time searching and more time getting started.</p>
-        </article>
-        <article class="glass rounded-[var(--radius)] p-7 transition hover:-translate-y-1">
-          <div class="mb-14 grid h-11 w-11 place-items-center rounded-2xl bg-[rgba(139,92,246,.15)] text-xl text-[var(--color-accent)]">✦</div>
-          <h3 class="font-[var(--font-heading)] text-lg font-semibold">Stay current</h3>
-          <p class="mt-3 text-sm leading-6 text-[var(--color-muted)]">Find announcements, updates, and helpful context from the people building around Opex.</p>
-        </article>
-        <article class="glass rounded-[var(--radius)] p-7 transition hover:-translate-y-1">
-          <div class="mb-14 grid h-11 w-11 place-items-center rounded-2xl bg-[rgba(139,92,246,.15)] text-xl text-[var(--color-accent)]">◌</div>
-          <h3 class="font-[var(--font-heading)] text-lg font-semibold">Find your people</h3>
-          <p class="mt-3 text-sm leading-6 text-[var(--color-muted)]">Join a growing server where members can share ideas, ask questions, and squad up.</p>
-        </article>
-      </div>
-    </section>
+        <div class="code-box" id="scriptText">loadstring(game:HttpGet("https://raw.githubusercontent.com/Opex-Hub/Opex-Hub/refs/heads/main/Opex%20Hub"))()</div>
+        <button class="btn" onclick="copyCode()" id="copyBtn">Copy Script</button>
 
-    <section id="games" class="border-y border-[var(--color-border)] bg-[var(--color-surface)] py-24 md:py-32">
-      <div class="container">
-        <div class="mb-12 max-w-2xl">
-          <p class="mb-4 text-xs font-bold uppercase tracking-[.2em] text-[var(--color-accent)]">Supported games</p>
-          <h2 class="font-[var(--font-heading)] text-3xl font-semibold tracking-[-.04em] md:text-5xl">Built for the games<br><span class="text-gradient">you play most.</span></h2>
-          <p class="mt-5 leading-7 text-[var(--color-muted)]">Opex currently supports a growing list of Roblox experiences. Join the Opex server for compatibility updates, announcements, and help.</p>
+        <div class="discord-section">
+            <p>Join Discord and tell me what game to make!</p>
+            <a href="https://discord.gg/p2KVGEyqn" target="_blank" class="btn discord-btn">Join Discord</a>
         </div>
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <article class="glass rounded-[var(--radius)] p-6 transition hover:-translate-y-1">
-            <span class="text-sm font-bold text-[var(--color-accent)]">01</span>
-            <h3 class="mt-12 font-[var(--font-heading)] text-lg font-semibold">MM2</h3>
-            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Murder Mystery 2</p>
-          </article>
-          <article class="glass rounded-[var(--radius)] p-6 transition hover:-translate-y-1">
-            <span class="text-sm font-bold text-[var(--color-accent)]">02</span>
-            <h3 class="mt-12 font-[var(--font-heading)] text-lg font-semibold">Grow a Garden</h3>
-            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Grow, collect, and build.</p>
-          </article>
-          <article class="glass rounded-[var(--radius)] p-6 transition hover:-translate-y-1">
-            <span class="text-sm font-bold text-[var(--color-accent)]">03</span>
-            <h3 class="mt-12 font-[var(--font-heading)] text-lg font-semibold">Climb and Jump Tower</h3>
-            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Take on the tower challenge.</p>
-          </article>
-          <article class="glass rounded-[var(--radius)] p-6 transition hover:-translate-y-1">
-            <span class="text-sm font-bold text-[var(--color-accent)]">04</span>
-            <h3 class="mt-12 font-[var(--font-heading)] text-lg font-semibold">+1 Wings for Brainrot</h3>
-            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Keep progressing and flying higher.</p>
-          </article>
-        </div>
-      </div>
-    </section>
 
-    <section id="how" class="border-y border-[var(--color-border)] bg-[var(--color-surface)] py-24">
-      <div class="container grid items-center gap-12 md:grid-cols-[.75fr_1.25fr]">
-        <div>
-          <p class="mb-4 text-xs font-bold uppercase tracking-[.2em] text-[var(--color-accent)]">Start in three steps</p>
-          <h2 class="font-[var(--font-heading)] text-3xl font-semibold tracking-[-.04em] md:text-4xl">The Opex server<br>keeps you moving.</h2>
-          <p class="mt-5 max-w-sm leading-7 text-[var(--color-muted)]">Join the Opex server for updates, support, game news, and a community built around the latest experiences.</p>
+        <div class="games-section">
+            <h3>Supported Games</h3>
+            <ul class="games-list">
+                <li>Mm2</li>
+                <li>Grow a garden</li>
+                <li>+1 wings for brainrot</li>
+                <li>Climb and jump tower</li>
+                <li class="coming-soon">More coming soon...</li>
+            </ul>
         </div>
-        <div class="grid gap-4 sm:grid-cols-3">
-          <div class="rounded-[var(--radius)] border border-[var(--color-border)] p-5"><span class="text-sm text-[var(--color-accent)]">01</span>
-            <h3 class="mt-8 font-semibold">Copy</h3>
-            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Grab the loadstring above.</p>
-          </div>
-          <div class="rounded-[var(--radius)] border border-[var(--color-border)] p-5"><span class="text-sm text-[var(--color-accent)]">02</span>
-            <h3 class="mt-8 font-semibold">Load</h3>
-            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Use it in one of the supported games.</p>
-          </div>
-          <div class="rounded-[var(--radius)] border border-[var(--color-border)] p-5"><span class="text-sm text-[var(--color-accent)]">03</span>
-            <h3 class="mt-8 font-semibold">Connect</h3>
-            <p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">Join the Opex server for updates and help.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer class="container flex flex-col gap-5 py-10 text-sm text-[var(--color-muted)] sm:flex-row sm:items-center sm:justify-between">
-    <div class="flex items-center gap-3"><span class="grid h-8 w-8 place-items-center rounded-xl bg-[var(--color-primary)] text-sm font-bold text-[var(--color-primary-contrast)]">O</span><span>© 2025 Opex Hub</span></div>
-    <div class="flex gap-6"><a href="/community" class="hover:text-[var(--color-text)]">Community</a><a href="https://discord.gg/QPuRGAwBN" class="hover:text-[var(--color-text)]">Discord ↗</a></div>
-  </footer>
+    </div>
+
+    <script>
+        function copyCode() {
+            const scriptText = document.getElementById("scriptText").innerText;
+            const copyBtn = document.getElementById("copyBtn");
+            
+            navigator.clipboard.writeText(scriptText).then(() => {
+                copyBtn.innerText = "Copied!";
+                copyBtn.style.background = "#4caf50";
+                copyBtn.style.color = "white";
+                
+                setTimeout(() => {
+                    copyBtn.innerText = "Copy Script";
+                    copyBtn.style.background = "#5f91ff";
+                    copyBtn.style.color = "#050b14";
+                }, 2000);
+            }).catch(err => {
+                console.error("Failed to copy text: ", err);
+            });
+        }
+    </script>
 </body>
-
 </html>
