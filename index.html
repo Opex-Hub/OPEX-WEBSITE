@@ -1,285 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Opex Hub</title>
-    <style>
-        /* Base Reset & Styling */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Opex Hub</title>
+<style>
+  :root {
+    --bg: #07080d;
+    --card: rgba(20, 22, 34, 0.72);
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #e8eaf2;
+    --muted: #8b90a8;
+    --accent: #5ce1e6;
+    --accent2: #8b5cf6;
+    --danger: #ff5c7a;
+  }
 
-        body {
-            background: #050b14;
-            background: radial-gradient(circle at bottom right, #0a1930, #000000);
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            overflow: hidden; /* Keeps the stars inside the window */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* Shooting Stars Animation */
-        .stars-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            transform: rotateZ(45deg);
-        }
+  body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 20px 80px;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-        .star {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            height: 2px;
-            background: linear-gradient(-45deg, #5f91ff, rgba(0, 0, 255, 0));
-            border-radius: 999px;
-            filter: drop-shadow(0 0 6px #699bff);
-            animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
-        }
+  /* ---- animated background orbs ---- */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(110px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+    animation: float 18s ease-in-out infinite;
+  }
+  .orb.a { width: 460px; height: 460px; background: #5ce1e6; top: -140px; left: -120px; }
+  .orb.b { width: 520px; height: 520px; background: #8b5cf6; bottom: -200px; right: -160px; animation-delay: -6s; }
+  .orb.c { width: 320px; height: 320px; background: #ec4899; top: 40%; left: 55%; opacity: 0.18; animation-delay: -12s; }
 
-        .star::before {
-            content: '';
-            position: absolute;
-            top: calc(50% - 1px);
-            right: 0;
-            height: 2px;
-            background: linear-gradient(-45deg, rgba(0,0,255,0), #5f91ff, rgba(0,0,255,0));
-            transform: translateX(50%) rotateZ(45deg);
-            border-radius: 100%;
-            animation: shining 3s ease-in-out infinite;
-        }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(40px, -30px) scale(1.08); }
+    66%      { transform: translate(-30px, 25px) scale(0.95); }
+  }
 
-        .star::after {
-            content: '';
-            position: absolute;
-            top: calc(50% - 1px);
-            right: 0;
-            height: 2px;
-            background: linear-gradient(-45deg, rgba(0,0,255,0), #5f91ff, rgba(0,0,255,0));
-            transform: translateX(50%) rotateZ(-45deg);
-            border-radius: 100%;
-            animation: shining 3s ease-in-out infinite;
-        }
+  .wrap {
+    width: 100%;
+    max-width: 640px;
+    position: relative;
+    z-index: 1;
+  }
 
-        /* Individual Star Positions and Delays */
-        .star:nth-child(1) { top: calc(50% - -100px); left: calc(50% - 300px); animation-delay: 0s; }
-        .star:nth-child(2) { top: calc(50% - 150px); left: calc(50% - 100px); animation-delay: 1.2s; }
-        .star:nth-child(3) { top: calc(50% - -250px); left: calc(50% - 200px); animation-delay: 2.5s; }
-        .star:nth-child(4) { top: calc(50% - 50px); left: calc(50% - 400px); animation-delay: 0.8s; }
-        .star:nth-child(5) { top: calc(50% - 300px); left: calc(50% - 150px); animation-delay: 3.1s; }
+  /* ---- header ---- */
+  header { text-align: center; margin-bottom: 36px; }
 
-        @keyframes tail {
-            0% { width: 0; }
-            30% { width: 100px; }
-            100% { width: 0; }
-        }
+  .logo {
+    width: 62px; height: 62px;
+    margin: 0 auto 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    color: #07080d;
+    box-shadow: 0 0 40px rgba(92, 225, 230, 0.35);
+  }
 
-        @keyframes shooting {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(800px); }
-        }
+  h1 {
+    font-size: 2.35rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  h1 span {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-        @keyframes shining {
-            0% { width: 0; }
-            50% { width: 30px; }
-            100% { width: 0; }
-        }
+  .tagline {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-top: 10px;
+  }
 
-        /* Glassmorphism Main UI */
-        .container {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            width: 90%;
-            max-width: 550px;
-            text-align: center;
-            z-index: 1;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-        }
+  /* ---- main card ---- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 26px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 5px;
-            background: -webkit-linear-gradient(#5f91ff, #a5c2ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(95, 145, 255, 0.3);
-        }
+  label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
 
-        p {
-            color: #b0bec5;
-            margin-bottom: 20px;
-            font-size: 1rem;
-        }
+  .field {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .field svg {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 17px; height: 17px;
+    stroke: var(--muted);
+    pointer-events: none;
+  }
 
-        /* Loadstring Box */
-        .code-box {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            border-radius: 10px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9rem;
-            color: #5f91ff;
-            word-break: break-all;
-            margin-bottom: 15px;
-            border: 1px solid rgba(95, 145, 255, 0.2);
-        }
+  input[type="text"] {
+    width: 100%;
+    padding: 15px 16px 15px 44px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input[type="text"]::placeholder { color: #5a5f75; }
+  input[type="text"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(92, 225, 230, 0.14);
+  }
+  input.invalid {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(255, 92, 122, 0.14);
+  }
 
-        .btn {
-            background: #5f91ff;
-            color: #050b14;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
+  .btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: #07080d;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.2s, filter 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+  }
+  .btn:hover  { filter: brightness(1.1); box-shadow: 0 10px 30px rgba(92, 225, 230, 0.25); }
+  .btn:active { transform: scale(0.985); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; filter: none; box-shadow: none; }
 
-        .btn:hover {
-            background: #7ca5ff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(95, 145, 255, 0.4);
-        }
+  .hint {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 14px;
+    line-height: 1.55;
+    text-align: center;
+  }
 
-        /* Discord Section */
-        .discord-section {
-            margin-top: 35px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .discord-section p {
-            color: #ffffff;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
+  /* ---- recent links ---- */
+  .recent { margin-top: 28px; }
 
-        .discord-btn {
-            background: #5865F2; /* Standard Discord Blurple */
-            color: white;
-        }
+  .recent-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 0 4px;
+  }
+  .recent-head h2 {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--muted);
+  }
+  .clear {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .clear:hover { color: var(--danger); background: rgba(255, 92, 122, 0.1); }
 
-        .discord-btn:hover {
-            background: #4752C4;
-            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
-        }
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.12s;
+  }
+  .item:hover {
+    background: rgba(92, 225, 230, 0.06);
+    border-color: rgba(92, 225, 230, 0.3);
+    transform: translateX(3px);
+  }
 
-        /* Supported Games List */
-        .games-section {
-            margin-top: 35px;
-            text-align: left;
-        }
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    flex-shrink: 0;
+  }
 
-        .games-section h3 {
-            color: #5f91ff;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            text-align: center;
-        }
+  .item-text {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.85rem;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    color: #b9bed4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-        .games-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+  .del {
+    background: none;
+    border: none;
+    color: #5a5f75;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+    flex-shrink: 0;
+  }
+  .del:hover { color: var(--danger); background: rgba(255, 92, 122, 0.12); }
 
-        .games-list li {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px 15px;
-            border-radius: 8px;
-            border-left: 4px solid #5f91ff;
-            font-size: 0.95rem;
-            transition: background 0.3s;
-        }
+  .empty {
+    text-align: center;
+    color: #4d5169;
+    font-size: 0.83rem;
+    padding: 22px 0;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+  }
 
-        .games-list li:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
+  /* ---- toast ---- */
+  #toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translate(-50%, 100px);
+    background: #14162a;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 13px 20px;
+    border-radius: 11px;
+    font-size: 0.87rem;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+    z-index: 99;
+    max-width: 90vw;
+    text-align: center;
+  }
+  #toast.show { transform: translate(-50%, 0); opacity: 1; }
+  #toast.err  { border-color: rgba(255, 92, 122, 0.5); }
+  #toast.ok   { border-color: rgba(92, 225, 230, 0.5); }
 
-        .games-list .coming-soon {
-            border-left: 4px solid #4caf50;
-            color: #4caf50;
-            font-style: italic;
-            text-align: center;
-            background: transparent;
-        }
-        
-        .games-list .coming-soon:hover {
-            background: transparent;
-        }
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #4d5169;
+    line-height: 1.6;
+  }
 
-    </style>
+  @media (max-width: 480px) {
+    h1 { font-size: 1.9rem; }
+    .card { padding: 20px; }
+  }
+</style>
 </head>
 <body>
 
-    <div class="stars-container">
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
+<div class="orb a"></div>
+<div class="orb b"></div>
+<div class="orb c"></div>
+
+<div class="wrap">
+
+  <header>
+    <div class="logo">◆</div>
+    <h1>Opex<span>Hub</span></h1>
+    <p class="tagline">Paste a LootLabs link. Hit start. Get to your destination.</p>
+  </header>
+
+  <section class="card">
+    <label for="url">LootLabs link</label>
+    <div class="field">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      <input id="url" type="text" placeholder="https://loot-link.com/s?..." autocomplete="off" spellcheck="false" />
     </div>
 
-    <div class="container">
-        <h1>Opex Hub</h1>
-        <p>Premium Script Execution Hub</p>
+    <button id="start" class="btn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      Start
+    </button>
 
-        <div class="code-box" id="scriptText">loadstring(game:HttpGet("https://raw.githubusercontent.com/Opex-Hub/Opex-Hub/refs/heads/main/Main"))()</div>
-        <button class="btn" onclick="copyCode()" id="copyBtn">Copy Script</button>
+    <p class="hint">
+      Opens the link in a new tab. Complete each task and any verification
+      yourself — then the reward page unlocks.
+    </p>
+  </section>
 
-        <div class="discord-section">
-            <p>Join Discord and tell me what game to make!</p>
-            <a href="https://discord.gg/p2KVGEyqn" target="_blank" class="btn discord-btn">Join Discord</a>
-        </div>
-
-        <div class="games-section">
-            <h3>Supported Games</h3>
-            <ul class="games-list">
-                <li>Mm2</li>
-                <li>Grow a garden</li>
-                <li>+1 wings for brainrot</li>
-                <li>Climb and jump tower</li>
-                <li class="coming-soon">More coming soon...</li>
-            </ul>
-        </div>
+  <section class="recent">
+    <div class="recent-head">
+      <h2>Recent links</h2>
+      <button class="clear" id="clearAll">Clear all</button>
     </div>
+    <div id="list"></div>
+  </section>
 
-    <script>
-        function copyCode() {
-            const scriptText = document.getElementById("scriptText").innerText;
-            const copyBtn = document.getElementById("copyBtn");
-            
-            navigator.clipboard.writeText(scriptText).then(() => {
-                copyBtn.innerText = "Copied!";
-                copyBtn.style.background = "#4caf50";
-                copyBtn.style.color = "white";
-                
-                setTimeout(() => {
-                    copyBtn.innerText = "Copy Script";
-                    copyBtn.style.background = "#5f91ff";
-                    copyBtn.style.color = "#050b14";
-                }, 2000);
-            }).catch(err => {
-                console.error("Failed to copy text: ", err);
-            });
-        }
-    </script>
+  <footer>
+    Opex Hub &middot; runs entirely in your browser &middot; nothing is uploaded
+  </footer>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  const STORE_KEY = "opexhub.links";
+  const MAX_ITEMS = 10;
+
+  const input   = document.getElementById("url");
+  const startBtn= document.getElementById("start");
+  const listEl  = document.getElementById("list");
+  const clearEl = document.getElementById("clearAll");
+  const toastEl = document.getElementById("toast");
+
+  let toastTimer = null;
+
+  /* ---------- toast ---------- */
+  function toast(msg, kind = "") {
+    toastEl.textContent = msg;
+    toastEl.className = "show " + kind;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toastEl.className = ""; }, 3200);
+  }
+
+  /* ---------- storage ---------- */
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      const arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch { return []; }
+  }
+
+  function save(items) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(items)); } catch {}
+  }
+
+  /* ---------- url helpers ---------- */
+  function normalize(raw) {
+    let s = (raw || "").trim();
+    if (!s) return null;
+    if (!/^https?:\/\//i.test(s)) s = "https://" + s;
+    try {
+      const u = new URL(s);
+      if (!u.hostname.includes(".")) return null;
+      return u.href;
+    } catch { return null; }
+  }
+
+  function pretty(url) {
+    return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  }
+
+  /* ---------- render ---------- */
+  function render() {
+    const items = load();
+    listEl.innerHTML = "";
+
+    if (!items.length) {
+      const d = document.createElement("div");
+      d.className = "empty";
+      d.textContent = "No links yet — add one above.";
+      listEl.appendChild(d);
+      return;
+    }
+
+    items.forEach((url) => {
+      const row = document.createElement("div");
+      row.className = "item";
+      row.title = url;
+
+      const dot = document.createElement("span");
+      dot.className = "dot";
+
+      const txt = document.createElement("span");
+      txt.className = "item-text";
+      txt.textContent = pretty(url);
+
+      const del = document.createElement("button");
+      del.className = "del";
+      del.textContent = "×";
+      del.title = "Remove";
+      del.addEventListener("click", (e) => {
+        e.stopPropagation();
+        removeItem(url);
+      });
+
+      row.append(dot, txt, del);
+      row.addEventListener("click", () => launch(url));
+      listEl.appendChild(row);
+    });
+  }
+
+  /* ---------- actions ---------- */
+  function addItem(url) {
+    let items = load().filter((u) => u !== url);
+    items.unshift(url);
+    if (items.length > MAX_ITEMS) items = items.slice(0, MAX_ITEMS);
+    save(items);
+    render();
+  }
+
+  function removeItem(url) {
+    save(load().filter((u) => u !== url));
+    render();
+    toast("Link removed");
+  }
+
+  function launch(url) {
+    const win = window.open(url, "_blank", "noopener,noreferrer");
+    if (!win) {
+      toast("Popup blocked — allow popups for this page.", "err");
+      return;
+    }
+    toast("Opened in a new tab. Complete the tasks there.", "ok");
+  }
+
+  function start() {
+    const url = normalize(input.value);
+
+    if (!url) {
+      input.classList.add("invalid");
+      toast("That doesn't look like a valid link.", "err");
+      input.focus();
+      return;
+    }
+
+    input.classList.remove("invalid");
+    input.value = url;
+    addItem(url);
+    launch(url);
+  }
+
+  /* ---------- events ---------- */
+  startBtn.addEventListener("click", start);
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") start();
+  });
+
+  input.addEventListener("input", () => {
+    input.classList.remove("invalid");
+  });
+
+  clearEl.addEventListener("click", () => {
+    if (!load().length) return;
+    save([]);
+    render();
+    toast("History cleared");
+  });
+
+  /* ---------- init ---------- */
+  render();
+  input.focus();
+})();
+</script>
 </body>
 </html>
