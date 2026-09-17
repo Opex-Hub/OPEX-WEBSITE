@@ -1,21 +1,38 @@
+#!/usr/bin/env python3
+"""
+LOOTLABS BOT v2.0 - Terminal Version
+Automatically processes LootLabs links 5000 times with 1-minute intervals
+Handles 1-click tasks and Cloudflare Turnstile verification automatically
+
+Made by ISMOILOFF - Use at your own risk!
+"""
+
 import time
 import re
 import sys
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
+import os
 import asyncio
 import json
-import os
 import platform
 import random
 import subprocess
 from typing import Optional
-import nodriver as uc
+from urllib.parse import urlparse
+
+# Selenium imports
+try:
+    from selenium import webdriver
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.common.exceptions import TimeoutException, NoSuchElementException
+    from webdriver_manager.chrome import ChromeDriverManager
+    from selenium.webdriver.chrome.service import Service
+    import nodriver as uc
+except ImportError:
+    print("❌ Missing required packages. Install with:")
+    print("pip install selenium webdriver-manager nodriver")
+    sys.exit(1)
 
 # ---------- CONFIG ----------
 MAX_TASKS = 10         # Maximum number of tasks to attempt per cycle
@@ -27,17 +44,24 @@ CYCLE_DELAY = 60       # Seconds to wait between cycles (1 minute)
 
 def get_lootlabs_url():
     """Get LootLabs URL from user input."""
+    print("\n🤖 LOOTLABS BOT v2.0")
+    print("=" * 50)
+    print("🔥 This bot will automatically process a LootLabs link 5000 times!")
+    print("⏱️  Each cycle takes ~1 minute")
+    print("✅ Handles 1-click tasks + Cloudflare verification")
+    print("=" * 50)
+
     while True:
-        url = input("🔗 Enter LootLabs link: ").strip()
+        url = input("\n🔗 Enter LootLabs link: ").strip()
         if not url:
             continue
         if not url.startswith(('http://', 'https://')):
             url = 'https://' + url
         try:
             # Basic URL validation
-            from urllib.parse import urlparse
             parsed = urlparse(url)
             if parsed.netloc and '.' in parsed.netloc:
+                print(f"✅ Valid URL: {url}")
                 return url
         except:
             pass
